@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikum Data Mining - Klasifikasi & Evaluasi</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .materi-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        /* Custom scrollbar untuk code block */
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-track {
+            background: #1e293b; 
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 relative">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired text-blue-600 text-2xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">Lab<span class="text-blue-600">DataMining</span></span>
+                </div>
+                <div>
+                    <a href="#materi" class="text-slate-600 hover:text-blue-600 font-medium px-3 py-2 transition">Modul Praktikum</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-slate-900 to-blue-900 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="bg-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Modul Pembelajaran</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Klasifikasi dan Evaluasi Model</h1>
+            <p class="text-lg md:text-xl text-blue-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Panduan praktikum Data Mining mencakup pemisahan data latih, pelatihan model klasifikasi, confusion matrix, metrik evaluasi (accuracy, precision, recall, f1-score), dan k-fold cross validation.
+            </p>
+            <a href="#materi" class="bg-white text-slate-900 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-50 transition transform hover:-translate-y-1">
+                Mulai Praktikum <i class="fa-solid fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="materi">
+        
+        <!-- Search & Filter Bar -->
+        <div class="mb-8">
+            <div class="relative shadow-sm rounded-xl">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-search text-slate-400"></i>
+                </div>
+                <input type="text" id="searchInput" class="block w-full pl-12 pr-4 py-4 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Cari bagian modul (contoh: Dasar Teori, Python, Tugas)...">
+            </div>
+        </div>
+
+        <!-- Daftar Materi (Accordion) -->
+        <div class="space-y-4" id="materiContainer">
+
+            <!-- BAGIAN 1: Identitas & Capaian -->
+            <div class="materi-item bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+                <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center focus:outline-none cursor-pointer bg-white group">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="bg-blue-100 text-blue-700 font-bold w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 materi-title">1. Identitas & Capaian Praktikum</h3>
+                            <p class="text-sm text-slate-500">Informasi mata kuliah dan target pembelajaran.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 icon-arrow text-xl"></i>
+                </button>
+                <div class="materi-content bg-slate-50 border-t border-slate-100 text-slate-700">
+                    <div class="p-6 md:px-8">
+                        <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Identitas Praktikum</h4>
+                        <ul class="list-disc pl-5 mb-6 space-y-2">
+                            <li><strong>Mata Kuliah:</strong> Data Mining</li>
+                            <li><strong>Program Studi:</strong> Rekayasa Sistem Komputer</li>
+                            <li><strong>Topik Praktikum:</strong> Klasifikasi dan Evaluasi Model</li>
+                            <li><strong>Alokasi Waktu:</strong> 1 x 150 menit atau menyesuaikan jadwal laboratorium</li>
+                            <li><strong>Bentuk Kegiatan:</strong> Praktikum terarah, analisis hasil, dan penyusunan laporan</li>
+                        </ul>
+
+                        <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Capaian Praktikum</h4>
+                        <p class="mb-2 leading-relaxed">
+                            Setelah mengikuti praktikum ini, mahasiswa diharapkan mampu menyiapkan dataset klasifikasi, membagi data menjadi data latih dan data uji, melatih model klasifikasi, lalu mengevaluasi hasil prediksi dengan confusion matrix dan metrik klasifikasi standar <sup class="text-blue-500">[44, 52, 57]</sup>.
+                        </p>
+                        <p class="leading-relaxed">
+                            Mahasiswa juga diharapkan mampu menjelaskan mengapa accuracy tidak selalu cukup, terutama pada data yang tidak seimbang, serta memahami kegunaan cross validation untuk memperoleh estimasi performa model yang lebih stabil <sup class="text-blue-500">[45, 47, 53]</sup>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 2: Dasar Teori -->
+            <div class="materi-item bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+                <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center focus:outline-none cursor-pointer bg-white group">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="bg-blue-100 text-blue-700 font-bold w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 materi-title">2. Dasar Teori</h3>
+                            <p class="text-sm text-slate-500">Konsep klasifikasi, data latih/uji, dan metrik evaluasi.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 icon-arrow text-xl"></i>
+                </button>
+                <div class="materi-content bg-slate-50 border-t border-slate-100 text-slate-700">
+                    <div class="p-6 md:px-8 space-y-6">
+                        
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">Klasifikasi</h4>
+                            <p class="leading-relaxed">Klasifikasi adalah teknik supervised learning yang mempelajari hubungan antara fitur masukan dan label target dari data berlabel, lalu menggunakan pola tersebut untuk memprediksi kelas pada data baru <sup class="text-blue-500">[45]</sup>. Pada praktikum ini, model dibangun menggunakan algoritma seperti Decision Tree, Naive Bayes, atau KNN <sup class="text-blue-500">[44, 57]</sup>.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">Data Latih dan Data Uji</h4>
+                            <p class="leading-relaxed">Data latih digunakan untuk membangun model, sedangkan data uji digunakan untuk menilai kemampuan generalisasi model pada data yang belum pernah dilihat sebelumnya <sup class="text-blue-500">[45, 52]</sup>. Menguji model pada data yang sama dengan data pelatihan dapat menghasilkan penilaian yang terlalu optimistis.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">Confusion Matrix</h4>
+                            <p class="leading-relaxed">Confusion matrix adalah tabel yang membandingkan label aktual dengan hasil prediksi model untuk menunjukkan jumlah prediksi benar dan salah pada setiap kelas <sup class="text-blue-500">[44, 52, 58]</sup>. Komponen utamanya adalah True Positive, True Negative, False Positive, dan False Negative.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">Accuracy, Precision, Recall, dan F1-score</h4>
+                            <p class="leading-relaxed">Accuracy mengukur proporsi prediksi benar dari seluruh data, tetapi dapat menyesatkan jika distribusi kelas tidak seimbang <sup class="text-blue-500">[44, 47]</sup>. Precision mengukur ketepatan prediksi positif, recall mengukur kemampuan model menemukan seluruh data positif, sedangkan F1-score merangkum precision dan recall dalam satu nilai harmonik <sup class="text-blue-500">[44, 47, 57]</sup>.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">Cross Validation</h4>
+                            <p class="leading-relaxed">Cross validation membagi dataset ke beberapa fold, melatih model pada sebagian fold dan mengujinya pada fold yang tersisa secara bergantian <sup class="text-blue-500">[45, 50, 53]</sup>. Teknik ini memberikan estimasi performa yang lebih robust ketika ukuran dataset terbatas.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 3: Persiapan & Skenario -->
+            <div class="materi-item bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+                <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center focus:outline-none cursor-pointer bg-white group">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="bg-blue-100 text-blue-700 font-bold w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 materi-title">3. Alat, Bahan & Skenario</h3>
+                            <p class="text-sm text-slate-500">Persiapan software dan skenario praktikum.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 icon-arrow text-xl"></i>
+                </button>
+                <div class="materi-content bg-slate-50 border-t border-slate-100 text-slate-700">
+                    <div class="p-6 md:px-8 space-y-6">
+                        
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Alat dan Bahan</h4>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>Komputer atau laptop dengan Python 3.</li>
+                                <li>Jupyter Notebook, Google Colab, atau editor Python lain (VS Code).</li>
+                                <li>Library Python: <code>pandas</code>, <code>numpy</code>, <code>scikit-learn</code>, <code>matplotlib</code>, <code>seaborn</code>.</li>
+                                <li>Dataset klasifikasi dengan minimal 100 baris data, minimal 3 fitur, dan 1 label target.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Dataset yang Disarankan</h4>
+                            <p class="leading-relaxed">Dataset sebaiknya memiliki label kelas yang jelas, misalnya status kelulusan mahasiswa, klasifikasi penyakit, prediksi churn pelanggan, atau kualitas perangkat. Dataset iris atau kelulusan mahasiswa direkomendasikan untuk awal karena mudah divisualisasikan <sup class="text-blue-500">[52, 58]</sup>.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Skenario Praktikum</h4>
+                            <p class="leading-relaxed">Mahasiswa membangun satu model klasifikasi, mengevaluasinya dengan confusion matrix serta metrik accuracy, precision, recall, dan F1-score <sup class="text-blue-500">[44, 47]</sup>. Selanjutnya, melakukan k-fold cross validation untuk membandingkan hasil evaluasi train-test split dengan validasi silang <sup class="text-blue-500">[45, 53]</sup>.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 4: Langkah Praktikum (Koding Python) -->
+            <div class="materi-item bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+                <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center focus:outline-none cursor-pointer bg-white group">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="bg-blue-100 text-blue-700 font-bold w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-brands fa-python text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 materi-title">4. Langkah Praktikum (Code)</h3>
+                            <p class="text-sm text-slate-500">Panduan langkah demi langkah implementasi dengan Python.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 icon-arrow text-xl"></i>
+                </button>
+                <div class="materi-content bg-slate-50 border-t border-slate-100 text-slate-700">
+                    <div class="p-6 md:px-8 space-y-8">
+                        
+                        <!-- Step 1 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">1. Persiapan Lingkungan Kerja</h4>
+                            <p class="mb-2">Impor library berikut pada awal kode Jupyter Notebook atau Google Colab.</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+import seaborn as sns</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">2. Memuat Dataset</h4>
+                            <p class="mb-2">Contoh memakai file CSV:</p>
+                            <div class="bg-slate-900 rounded-xl p-4 mb-2 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">df = pd.read_csv('dataset.csv')
+df.head()</code></pre>
+                            </div>
+                            <p class="mb-2 text-sm text-slate-500">Jika menggunakan dataset bawaan (Iris):</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">from sklearn.datasets import load_iris
+iris = load_iris()
+X = pd.DataFrame(iris.data, columns=iris.feature_names)
+y = pd.Series(iris.target)</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">3. Eksplorasi Awal Dataset</h4>
+                            <p class="mb-2">Pemeriksaan struktur data, tipe data, dan nilai kosong sebelum membuat model.</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">df.info()
+df.isnull().sum()
+df.describe()</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">4. Menentukan Fitur dan Target</h4>
+                            <p class="mb-2">Misalnya jika kolom target bernama <code>label</code>:</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">X = df.drop('label', axis=1)
+y = df['label']</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">5. Membagi Data Latih dan Data Uji</h4>
+                            <p class="mb-2">Rasio yang sering digunakan adalah 80:20 atau 70:30. Parameter <code>stratify=y</code> menjaga proporsi kelas tetap seimbang.</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">6. Melatih Model Klasifikasi</h4>
+                            <p class="mb-2">Digunakan Decision Tree sebagai contoh karena mudah diinterpretasikan.</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 7 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">7. Membuat Confusion Matrix</h4>
+                            <div class="bg-slate-900 rounded-xl p-4 mb-2 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">cm = confusion_matrix(y_test, y_pred)
+print(cm)</code></pre>
+                            </div>
+                            <p class="mb-2 text-sm text-slate-500">Visualisasi dengan Seaborn:</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 8 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">8. Menghitung Metrik Evaluasi</h4>
+                            <div class="bg-slate-900 rounded-xl p-4 mb-2 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">acc = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred, average='weighted')
+rec = recall_score(y_test, y_pred, average='weighted')
+f1 = f1_score(y_test, y_pred, average='weighted')
+
+print('Accuracy :', acc)
+print('Precision:', prec)
+print('Recall   :', rec)
+print('F1-score :', f1)</code></pre>
+                            </div>
+                            <p class="mb-2 text-sm text-slate-500">Classification Report Lengkap:</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">print(classification_report(y_test, y_pred))</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 9 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">9. Melakukan Cross Validation</h4>
+                            <p class="mb-2">Untuk memperoleh evaluasi yang lebih stabil, lakukan 5-fold cross validation.</p>
+                            <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto shadow-inner">
+<pre><code class="text-green-400 text-sm font-mono">cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv_scores = cross_val_score(model, X, y, cv=cv, scoring='accuracy')
+
+print('CV Scores:', cv_scores)
+print('Mean CV Accuracy:', cv_scores.mean())</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Step 10 -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">10. Interpretasi Hasil</h4>
+                            <p class="leading-relaxed">Accuracy tinggi belum tentu menunjukkan model baik jika salah satu kelas jarang muncul, sehingga precision, recall, dan F1-score tetap perlu dianalisis. Jika nilai cross validation jauh berbeda dari hasil test split, model perlu diperiksa lebih lanjut karena bisa jadi sensitif terhadap pembagian data.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 5: Tugas & Format Laporan -->
+            <div class="materi-item bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+                <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center focus:outline-none cursor-pointer bg-white group">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="bg-blue-100 text-blue-700 font-bold w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-file-pen text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 materi-title">5. Tugas, Laporan & Rubrik</h3>
+                            <p class="text-sm text-slate-500">Format pengerjaan, soal analisis, dan penilaian praktikum.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 icon-arrow text-xl"></i>
+                </button>
+                <div class="materi-content bg-slate-50 border-t border-slate-100 text-slate-700">
+                    <div class="p-6 md:px-8 space-y-8">
+                        
+                        <!-- Format Hasil -->
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Contoh Format Hasil Praktikum</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
+                                    <thead class="bg-slate-200 text-slate-800">
+                                        <tr>
+                                            <th class="p-3 border border-slate-300">Komponen</th>
+                                            <th class="p-3 border border-slate-300">Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-600">
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Algoritma</td><td class="p-3 border border-slate-300">Decision Tree</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Jumlah data</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi sesuai dataset</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Rasio train-test</td><td class="p-3 border border-slate-300">80:20</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Accuracy</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi hasil praktikum</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Precision</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi hasil praktikum</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Recall</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi hasil praktikum</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">F1-score</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi hasil praktikum</td></tr>
+                                        <tr><td class="p-3 border border-slate-300 font-medium">Mean cross validation</td><td class="p-3 border border-slate-300 text-slate-400 italic">Diisi hasil praktikum</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Tugas Inti & Pengayaan -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-blue-800 mb-3 text-lg"><i class="fa-solid fa-bullseye mr-2"></i> Tugas Inti</h4>
+                                <ol class="list-decimal pl-5 space-y-2 text-sm">
+                                    <li>Gunakan 1 dataset klasifikasi minimal 100 baris.</li>
+                                    <li>Lakukan pembersihan data sederhana (missing value/duplikat).</li>
+                                    <li>Pisahkan fitur dan target.</li>
+                                    <li>Bagi data latih dan uji.</li>
+                                    <li>Bangun model klasifikasi.</li>
+                                    <li>Hitung CM, accuracy, precision, recall, f1-score.</li>
+                                    <li>Lakukan 5-fold cross validation.</li>
+                                    <li>Tulis interpretasi hasil minimal 3 paragraf.</li>
+                                </ol>
+                            </div>
+                            <div class="bg-amber-50 p-5 rounded-xl border border-amber-100">
+                                <h4 class="font-bold text-amber-800 mb-3 text-lg"><i class="fa-solid fa-star mr-2"></i> Tugas Pengayaan</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-amber-900">
+                                    <li>Bandingkan dua algoritma klasifikasi yang berbeda.</li>
+                                    <li>Analisis algoritma mana yang memberikan hasil lebih stabil pada cross validation.</li>
+                                    <li>Jelaskan kemungkinan penyebab perbedaan hasil antar algoritma.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Pertanyaan Analisis & Panduan Laporan -->
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Pertanyaan Analisis</h4>
+                            <ul class="list-disc pl-5 space-y-2 mb-6">
+                                <li>Apakah accuracy model sudah mencerminkan performa sebenarnya?</li>
+                                <li>Bagaimana hubungan precision dan recall pada model yang dibuat?</li>
+                                <li>Apakah confusion matrix menunjukkan kelas tertentu lebih sering salah diprediksi?</li>
+                                <li>Apakah mean cross validation mendukung hasil pengujian train-test split?</li>
+                                <li>Jika hasil tidak stabil, faktor apa yang mungkin menyebabkannya?</li>
+                            </ul>
+
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Panduan Laporan</h4>
+                            <p class="mb-2 text-sm">Laporan praktikum minimal memuat bagian berikut:</p>
+                            <ol class="list-decimal pl-5 space-y-1 text-sm columns-1 md:columns-2 gap-8">
+                                <li>Judul praktikum.</li>
+                                <li>Tujuan praktikum.</li>
+                                <li>Dasar teori singkat.</li>
+                                <li>Dataset dan deskripsi fitur.</li>
+                                <li>Langkah kerja.</li>
+                                <li>Cuplikan kode program.</li>
+                                <li>Hasil confusion matrix & metrik.</li>
+                                <li>Hasil cross validation.</li>
+                                <li>Analisis dan pembahasan.</li>
+                                <li>Kesimpulan.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Rubrik Penilaian -->
+                        <div>
+                            <h4 class="font-bold text-blue-800 mb-3 text-lg border-b pb-2">Rubrik Penilaian</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-3 border border-slate-700 w-3/4">Aspek Penilaian</th>
+                                            <th class="p-3 border border-slate-700 w-1/4 text-center">Bobot</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-700">
+                                        <tr><td class="p-3 border border-slate-200">Persiapan data</td><td class="p-3 border border-slate-200 text-center font-bold text-blue-600">15%</td></tr>
+                                        <tr><td class="p-3 border border-slate-200">Ketepatan implementasi model</td><td class="p-3 border border-slate-200 text-center font-bold text-blue-600">25%</td></tr>
+                                        <tr><td class="p-3 border border-slate-200">Ketepatan evaluasi model</td><td class="p-3 border border-slate-200 text-center font-bold text-blue-600">25%</td></tr>
+                                        <tr><td class="p-3 border border-slate-200">Analisis hasil</td><td class="p-3 border border-slate-200 text-center font-bold text-blue-600">25%</td></tr>
+                                        <tr><td class="p-3 border border-slate-200">Kerapian laporan</td><td class="p-3 border border-slate-200 text-center font-bold text-blue-600">10%</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center" id="tentang">
+        <p class="mb-2">Dibuat untuk keperluan praktikum Rekayasa Sistem Komputer.</p>
+        <p>&copy; 2023 Laboratorium Data Mining. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Buka tutup Akordion
+        const accordions = document.querySelectorAll('.accordion-btn');
+
+        accordions.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Tutup akordion lain jika ingin mode "satu terbuka" (opsional, saat ini dibiarkan independen)
+                
+                // Toggle ikon panah
+                const icon = this.querySelector('.icon-arrow');
+                icon.classList.toggle('rotate-180');
+
+                // Toggle konten
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    // Tambahan buffer pixel agar konten bawah tidak terpotong (misal bayangan shadow tabel)
+                    content.style.maxHeight = content.scrollHeight + 50 + "px"; 
+                }
+            });
+        });
+
+        // Buka akordion pertama secara otomatis saat halaman dimuat
+        window.onload = function() {
+            if(accordions.length > 0) {
+                accordions[0].click();
+            }
+        };
+
+        // Pencarian Materi (Real-time Filter)
+        const searchInput = document.getElementById('searchInput');
+        const materiItems = document.querySelectorAll('.materi-item');
+
+        searchInput.addEventListener('keyup', function(e) {
+            const searchString = e.target.value.toLowerCase();
+
+            materiItems.forEach(item => {
+                const title = item.querySelector('.materi-title').textContent.toLowerCase();
+                const desc = item.querySelector('.text-sm').textContent.toLowerCase();
+                // Cari di dalam konten juga (opsional, jika ingin mencari kode)
+                const contentText = item.querySelector('.materi-content').textContent.toLowerCase();
+
+                if (title.includes(searchString) || desc.includes(searchString) || contentText.includes(searchString)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
